@@ -40,3 +40,31 @@
 .list {
   list-style: none;
 }
+
+.messenger {
+  background-color: lightblue;
+  border: 1rem solid black;
+  border-radius: 2%;
+  width: 90vh;
+  height: 80vh;
+  align-self: center;
+}
+
+.chat-form {
+  position: absolute;
+  bottom: 0;
+  padding-bottom: 1%;
+}
+
+.chat-input {
+  width: 78vh;
+  height: 5vh;
+  padding: 1%;
+}
+
+.chat-btn {
+  background-color: rgb(77, 75, 75);
+  color: rgb(146, 201, 216);
+  width: 8vh;
+  height: 5vh;
+}
