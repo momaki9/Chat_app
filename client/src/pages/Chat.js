@@ -23,7 +23,8 @@ function Chat() {
 
         socket.on('from-server', (data) => {
             // console.log('Message recieved from server!!', data)
-            setChat((prev) => [...prev, data.message])
+            // sets the messages recieved with true value
+            setChat((prev) => [...prev, {message: data.message, recieved: true}])
         })
     }, [socket])
 
@@ -31,6 +32,8 @@ function Chat() {
         e.preventDefault();
         console.log(message);
         socket.emit('send-msg', { message })
+        //sets the messages sent with false value for recieved
+        setChat((prev) => [...prev, {message, recieved: false}])
         setMessage('');
     }
     return (
@@ -46,8 +49,8 @@ function Chat() {
                 <Center>
                     <div className='messenger'>
                         {
-                            chat.map((message) => (
-                                <p>Message: {message}</p>
+                            chat.map((data) => (
+                                <p key={data.message} style={{textAlign: data.recieved ? 'left' : "right"}}>Message: {data.message}</p>
                             ))
                         }
                         <form onSubmit={handleChatForm} className='chat-form'>
@@ -55,7 +58,6 @@ function Chat() {
                             <button type='submit' className='chat-btn'>Send</button>
                         </form>
                     </div>
-
                 </Center>
             </div>
         </>
