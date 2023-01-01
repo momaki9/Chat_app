@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { ADD_USER } from "../utils/mutations";
+import Auth from '../utils/auth';
 import {
     FormControl,
     FormLabel,
@@ -18,6 +21,36 @@ function Signup() {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const initialRef = React.useRef(null);
     const finalRef = React.useRef(null);
+
+    const [formState, setFormState] = useState({
+        username: '',
+        email: '',
+        password: ''
+    });
+
+    const [addUser, { error, data }] = useMutation(ADD_USER);
+
+    const formChange = (event) => {
+        const { name, value } = event.target;
+        setFormState({
+            ...formState,
+            [name]: value
+        });
+    };
+
+    const handleFormSubmission = async (event) => {
+        event.preventDefault();
+        console.log("form submitted")
+        try {
+            const { data } = await addUser({
+                variables: { ...formState }
+            });
+            Auth.login(data.addUser.token);
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
     return (
         <>
             <Button onClick={onOpen}>Signup</Button>
@@ -28,30 +61,51 @@ function Signup() {
                 onClose={onClose}
             >
                 <ModalOverlay />
-                <ModalContent>
-                    <ModalHeader>Create Your Account</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody pb={6}>
-                        <FormControl>
-                            <FormLabel>Username</FormLabel>
-                            <Input ref={initialRef} placeholder='Username' />
-                        </FormControl>
-                        <FormControl mt={4}>
-                            <FormLabel>Email</FormLabel>
-                            <Input placeholder='Email' />
-                        </FormControl>
-                        <FormControl mt={4}>
-                            <FormLabel>Password</FormLabel>
-                            <Input placeholder='Password' />
-                        </FormControl>
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button colorScheme='blue' mr={3}>
-                            Save
-                        </Button>
-                        <Button onClick={onClose}>Cancel</Button>
-                    </ModalFooter>
-                </ModalContent>
+                <form onSubmit={handleFormSubmission}>
+                    <ModalContent>
+                        <ModalHeader>Create Your Account</ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody pb={6}>
+                            <FormControl>
+                                <FormLabel>Username</FormLabel>
+                                <Input
+                                    ref={initialRef}
+                                    placeholder='Username'
+                                    name="username"
+                                    type={'text'}
+                                    value={formState.username}
+                                    onChange={formChange}
+                                />
+                            </FormControl>
+                            <FormControl mt={4}>
+                                <FormLabel>Email</FormLabel>
+                                <Input
+                                    placeholder='Email'
+                                    name="email"
+                                    type={'text'}
+                                    value={formState.email}
+                                    onChange={formChange}
+                                />
+                            </FormControl>
+                            <FormControl mt={4}>
+                                <FormLabel>Password</FormLabel>
+                                <Input
+                                    placeholder='Password'
+                                    name="password"
+                                    type={'password'}
+                                    value={formState.password}
+                                    onChange={formChange}
+                                />
+                            </FormControl>
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button colorScheme='blue' mr={3} type='submit'>
+                                Create
+                            </Button>
+                            <Button onClick={onClose}>Cancel</Button>
+                        </ModalFooter>
+                    </ModalContent>
+                </form>
             </Modal>
         </>
     )
