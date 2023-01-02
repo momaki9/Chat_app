@@ -1,2 +1,3 @@
 const User = require('./User');
-module.exports = { User };
+const Chatroom = require('./Chatroom');
+module.exports = { User, Chatroom };

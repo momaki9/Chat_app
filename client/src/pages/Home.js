@@ -2,12 +2,18 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {
     Heading,
-    Center
+    Center,
+    Button
 } from '@chakra-ui/react';
 import Login from '../components/Login';
 import Signup from '../components/Signup';
+import Auth from '../utils/auth';
 
 const Home = () => {
+    const logout = (event) => {
+        event.preventDefault();
+        Auth.logout();
+    };
     return (
         <>
             <Center>
@@ -15,11 +21,17 @@ const Home = () => {
                     <Heading>Home</Heading>
                 </Link>
             </Center>
-            <Center>
-                <Link to='/chat'>
-                    <Heading>Login</Heading>
-                </Link>
-            </Center>
+            {Auth.loggedIn() ? (
+                <Center>
+                    <Button onClick={logout}>Logout</Button>
+                </Center>
+            ) : (
+                <Center>
+                    <Link to='/chat'>
+                        <Heading>Login</Heading>
+                    </Link>
+                </Center>
+            )}
             <Center>
                 <Heading bg={'gray.300'}>Welcome!</Heading>
             </Center>

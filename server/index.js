@@ -14,8 +14,12 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
+  console.log('a test user connected');
+  let token = socket.handshake.auth.token;
+  console.log(token)
   socket.on('send-msg', (data) => {
     socket.broadcast.emit("from-server", data)
+    console.log(`test ${data}`)
   })
   socket.on('chat message', (msg) => {
     console.log(`message: ${msg}`)
@@ -31,7 +35,7 @@ server.listen(4000, () => {
 });
 
 const { ApolloServer } = require('apollo-server-express');
-const path = require('path');
+// const path = require('path');
 
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');

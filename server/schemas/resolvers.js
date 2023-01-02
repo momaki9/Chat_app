@@ -1,14 +1,17 @@
-const { User } = require('../models');
+const { User, Chatroom } = require('../models');
 const { signToken } = require('../utils/auth');
 const { AuthenticationError } = require('apollo-server-express');
 
 const resolvers = {
     Query: {
         users: async () => {
-            return await User.find({})
+            return await User.find({}).populate('chatRooms')
         },
         user: async (parent, { userId }) => {
-            return User.findOne({ _id: userId })
+            return User.findOne({ _id: userId }).populate('chatRooms')
+        },
+        rooms: async () => {
+            return await Chatroom.find({});
         }
     },
     Mutation: {
@@ -28,6 +31,13 @@ const resolvers = {
             }
             const token = signToken(user);
             return { token, user };
+        },
+        createRoom: async (parent, { category, userId }) => {
+            const room = await Chatroom.create({ category });
+            await User.findOneAndUpdate(
+                { _id: userId },
+                { $addToSet: { chatRooms: room._id } }
+            );
         }
     }
 };

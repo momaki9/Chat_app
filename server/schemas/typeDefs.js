@@ -6,10 +6,16 @@ const typeDefs = gql`
         username: String
         email: String
         password: String
+        chatRooms: [Chatroom]
+    }
+    type Chatroom {
+        _id: ID
+        category: String
     }
     type Query {
         users: [User]
         user(userId: ID!): User
+        rooms: [Chatroom]
     }
     type Auth {
         token: ID!
@@ -18,6 +24,7 @@ const typeDefs = gql`
     type Mutation {
         addUser(username: String!, email: String!, password: String!): Auth
         login(username: String!, password: String!): Auth
+        createRoom(category: String!, userId: ID!): Chatroom
     }
 `;
 
