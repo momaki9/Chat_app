@@ -18,6 +18,7 @@ import {
 import Navbar from "../components/Navbar";
 import { useMutation } from "@apollo/client";
 import { CREATE_ROOM } from "../utils/mutations";
+import RoomList from "../components/RoomList";
 import Auth from '../utils/auth';
 
 const Profile = () => {
@@ -90,6 +91,7 @@ const Profile = () => {
                     </Modal>
                 </CardBody>
             </Card>
+            <RoomList />
         </>
     )
 };

@@ -16,6 +16,7 @@ const typeDefs = gql`
         users: [User]
         user(userId: ID!): User
         rooms: [Chatroom]
+        room(roomId: ID!): Chatroom
     }
     type Auth {
         token: ID!

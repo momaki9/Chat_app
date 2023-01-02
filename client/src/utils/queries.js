@@ -18,3 +18,12 @@ export const QUERY_ONE_USER = gql`
         }
     }
 `;
+
+export const QUERY_ALL_ROOMS = gql`
+    query allRooms {
+        rooms {
+            _id
+            category
+        }
+    }
+`;

@@ -12,7 +12,10 @@ const resolvers = {
         },
         rooms: async () => {
             return await Chatroom.find({});
-        }
+        },
+        room: async (parent, { roomId }) => {
+            return Chatroom.findOne({ _id: roomId })
+        },
     },
     Mutation: {
         addUser: async (parent, { username, email, password }) => {
