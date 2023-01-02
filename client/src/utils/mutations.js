@@ -25,3 +25,11 @@ export const LOGIN_USER = gql`
         }
     }
 `;
+
+export const CREATE_ROOM = gql`
+    mutation createRoom($category: String!, $userId: ID!) {
+        createRoom(category: $category, userId: $userId) {
+            _id
+        }
+    }
+`;

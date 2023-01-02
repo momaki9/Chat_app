@@ -1,13 +1,12 @@
+import { Stack } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 const Navbar = () => {
     return (
         <>
-        <ul>
-            <li>Home</li>
-            <li>Login</li>
-            <li>Profile</li>
-            <li>Chat</li>
-            <li>Logout</li>
-        </ul>
+        <Stack direction={'row'}>
+            <Link to={'/'}>Home</Link>
+            <Link to={'/chat'}>Chat</Link>
+        </Stack>
         </>
     )
 };

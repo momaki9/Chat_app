@@ -6,6 +6,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import Chat from './pages/Chat'
 import Home from './pages/Home';
 import Login from './components/Login';
+import Profile from './pages/Profile';
 
 const httpLink = createHttpLink({
   uri: '/graphql'
@@ -43,6 +44,10 @@ function App() {
             <Route
               path='/login'
               element={<Login />}
+            />
+            <Route
+              path='/profile'
+              element={<Profile />}
             />
           </Routes>
         </Router>
