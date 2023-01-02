@@ -20,26 +20,21 @@ function Chat() {
     useEffect(() => {
         setSocket(io('http://localhost:4000', {
             auth: {
-                token: Auth.getToken()
+                token: Auth.getToken(),
+                username: Auth.getUser().data.username
             }
         }));
+        
     }, []);
 
     useEffect(() => {
         if (!socket) return;
 
         socket.on('from-server', (data) => {
-            // console.log('Message recieved from server!!', data)
             // sets the messages recieved with true value
-            setChat((prev) => [...prev, { message: data.message, recieved: true }])
-            console.log(data)
+            setChat((prev) => [...prev, { message: data.data.message, username: data.username, recieved: true }])
         })
     }, [socket]);
-
-    // console.log(Auth.getToken())
-    // console.log(Auth.getUser())
-    // console.log(Auth.getUser().data._id)
-
     const userId = Auth.getUser().data._id;
     const { loading, data } = useQuery(QUERY_ONE_USER, {
         variables: { userId: userId }
@@ -49,9 +44,11 @@ function Chat() {
 
     function handleChatForm(e) {
         e.preventDefault();
-        socket.emit('send-msg', { message })
+        let userId = socket.id
+        let username = Auth.getUser().data.username
+        socket.emit('send-msg', { message, userId, username })
         //sets the messages sent with false value for recieved
-        setChat((prev) => [...prev, { message, recieved: false }])
+        setChat((prev) => [...prev, { message, username, userId, recieved: false }])
         setMessage('');
     }
 
@@ -64,7 +61,7 @@ function Chat() {
             <div className="App">
                 <Heading>
                     <Container bg='blue.200' padding={'4'}>
-                        Welcome to instant messaging!
+                        Welcome to instant messaging {user.username}!
                     </Container>
                 </Heading>
                 <VStack padding={'4'}>
@@ -73,7 +70,7 @@ function Chat() {
                     <div className='messenger'>
                         {
                             chat.map((data) => (
-                                <p key={data.message} style={{ textAlign: data.recieved ? 'left' : "right" }}>{user.username}: {data.message}</p>
+                                <p key={data.userId} style={{ textAlign: data.recieved ? 'left' : "right" }}>{data.username}: {data.message}</p>
                             ))
                         }
                         <form onSubmit={handleChatForm} className='chat-form'>

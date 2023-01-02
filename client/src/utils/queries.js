@@ -27,3 +27,12 @@ export const QUERY_ALL_ROOMS = gql`
         }
     }
 `;
+
+export const QUERY_ONE_ROOM = gql`
+    query oneRoom($roomId: ID!) {
+        room(roomId: $roomId) {
+            _id
+            category
+        }
+    }
+`;

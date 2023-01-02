@@ -14,17 +14,16 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-  console.log('a test user connected');
   let token = socket.handshake.auth.token;
-  console.log(token)
+  let username = socket.handshake.auth.username
+  let userId = socket.id;
   socket.on('send-msg', (data) => {
-    socket.broadcast.emit("from-server", data)
-    console.log(`test ${data}`)
+    socket.broadcast.emit("from-server", {data, username, userId })
   })
-  socket.on('chat message', (msg) => {
-    console.log(`message: ${msg}`)
-    io.emit('chat message', msg)
-  })
+  // socket.on('chat message', (msg) => {
+  //   console.log(`message: ${msg}`)
+  //   io.emit('chat message', msg)
+  // })
   socket.on('disconnect', () => {
     console.log('The user disconnected')
   })
