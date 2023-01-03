@@ -15,7 +15,7 @@ const Navbar = () => {
     };
     return (
         <>
-            <Stack direction={'row'}>
+            <Stack direction={'row'} padding='5' bg={'blackAlpha.200'} spacing='10'>
                 <Center>
                     <Link to='/'>
                         <Heading>Home</Heading>
@@ -34,7 +34,7 @@ const Navbar = () => {
                             </Link>
                         </Center>
                         <Center>
-                            <Button onClick={logout}>Logout</Button>
+                            <Button onClick={logout} bg='red.400' color={'white'} _hover={{bg:'red.300'}}>Logout</Button>
                         </Center>
                     </>
                 ) : (

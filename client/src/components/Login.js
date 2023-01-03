@@ -56,7 +56,7 @@ function Login() {
 
     return (
         <>
-            <Button onClick={onOpen}>Login</Button>
+            <Button onClick={onOpen}  size={'lg'} padding='5' margin={'1'} colorScheme='blue' mr={3}>Login</Button>
             <Modal
                 initialFocusRef={initialRef}
                 finalFocusRef={finalRef}

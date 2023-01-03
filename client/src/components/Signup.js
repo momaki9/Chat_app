@@ -52,7 +52,7 @@ function Signup() {
 
     return (
         <>
-            <Button onClick={onOpen}>Signup</Button>
+            <Button onClick={onOpen} size={'lg'} padding='5' margin={'1'} colorScheme='blue' mr={3}>Signup</Button>
             <Modal
                 initialFocusRef={initialRef}
                 finalFocusRef={finalRef}
