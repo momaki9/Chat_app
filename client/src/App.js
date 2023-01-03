@@ -7,7 +7,8 @@ import Chat from './pages/Chat'
 import Home from './pages/Home';
 import Login from './components/Login';
 import Profile from './pages/Profile';
-
+import OneRoom from './pages/Room';
+import Navbar from './components/Navbar';
 const httpLink = createHttpLink({
   uri: '/graphql'
 });
@@ -32,6 +33,7 @@ function App() {
     <ApolloProvider client={client}>
       <ChakraProvider>
         <Router>
+          <Navbar />
           <Routes>
             <Route
               path='/chat'
@@ -48,6 +50,10 @@ function App() {
             <Route
               path='/profile'
               element={<Profile />}
+            />
+            <Route
+              path='/chat/:roomId'
+              element={<OneRoom />}
             />
           </Routes>
         </Router>

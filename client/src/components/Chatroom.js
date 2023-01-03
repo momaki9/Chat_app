@@ -6,8 +6,9 @@ import {
     CardHeader,
     Stack
 } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 
-const Chatroom = ({title, goSomeWhere, key}) => {
+const Chatroom = ({title, key, roomId}) => {
     return (
         <>
             <Card key={key}>
@@ -15,7 +16,7 @@ const Chatroom = ({title, goSomeWhere, key}) => {
                 <CardBody>
                     <Stack>
                         <Box>
-                            <Button onClick={goSomeWhere}>Join</Button>
+                            <Button><Link to={`/chat/${roomId}`}>Join</Link></Button>
                         </Box>
                     </Stack>
                 </CardBody>

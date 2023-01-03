@@ -13,9 +13,9 @@ import {
     ModalBody,
     FormLabel,
     Input,
-    ModalFooter
+    ModalFooter,
+    Heading
 } from "@chakra-ui/react";
-import Navbar from "../components/Navbar";
 import { useMutation } from "@apollo/client";
 import { CREATE_ROOM } from "../utils/mutations";
 import RoomList from "../components/RoomList";
@@ -51,8 +51,7 @@ const Profile = () => {
     }
     return (
         <>
-            <Navbar />
-            <h1>Profile Page</h1>
+            <Heading>Your Profile</Heading>
             <Card>
                 <CardBody>
                     <Button onClick={onOpen}>Create Chatroom</Button>
